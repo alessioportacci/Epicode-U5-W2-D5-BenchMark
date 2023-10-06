@@ -1,0 +1,78 @@
+﻿@model IEnumerable<Epicode_U5_W2_D5_BenchMark.Models.PrenotazioniModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h1>Index</h1>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NomeCliente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FkCamera)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataPrenotazione)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Dal)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Al)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Caparra)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tariffa)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MezzaPensione)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PrimaColazione)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NomeCliente)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FkCamera)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DataPrenotazione)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Dal)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Al)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Caparra)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tariffa)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MezzaPensione)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PrimaColazione)
+        </td>
+        <td>
+            @Html.ActionLink("Modifica", "Edit", new { id = item.PkPrenotazione }) |
+            @Html.ActionLink("Dettagli", "Details", new { id = item.PkPrenotazione }) |
+            @Html.ActionLink("Elimina", "Delete", new { id = item.PkPrenotazione })
+        </td>
+    </tr>
+}
+
+</table>

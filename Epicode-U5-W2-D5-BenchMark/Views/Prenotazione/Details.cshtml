@@ -1,0 +1,99 @@
+﻿@model Epicode_U5_W2_D5_BenchMark.Models.PrenotazioniModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Dettagli</h2>
+<hr />
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NomeCliente)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NomeCliente)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FkCamera)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FkCamera)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataPrenotazione)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataPrenotazione)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Al)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Al)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Caparra)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Caparra)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tariffa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tariffa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MezzaPensione)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MezzaPensione)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PrimaColazione)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PrimaColazione)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Modifica", "Edit", new { id = Model.PkPrenotazione }) |
+    @Html.ActionLink("Torna alla lista prenotazioni", "Index")
+</p>
+
+
+<div>
+
+    @{
+        Html.RenderAction("Index", "Richieste", new { id = Model.PkPrenotazione });
+
+    }
+
+</div>

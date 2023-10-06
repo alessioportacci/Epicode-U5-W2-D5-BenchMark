@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Epicode_U5_W2_D5_BenchMark.Models.StanzeModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Stanze</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Descrizione)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tipologia)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Occupata)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Descrizione)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tipologia)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Occupata)
+        </td>
+    </tr>
+}
+
+</table>

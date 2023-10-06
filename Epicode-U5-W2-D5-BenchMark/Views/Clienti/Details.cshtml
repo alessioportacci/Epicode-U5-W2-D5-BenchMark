@@ -1,0 +1,67 @@
+﻿@model Epicode_U5_W2_D5_BenchMark.Models.ClientiModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Cliente</h2>
+<hr />
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CF)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CF)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Citta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Citta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Provincia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Provincia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Telefono)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Telefono)
+        </dd>
+
+    </dl>
+</div>
+<p>
+
+    @Html.ActionLink("Aggiungi prenotazione", "Create", "Prenotazione", new { id= Model.PkCliente, area = "" }, new { @class = "" }) |
+    @Html.ActionLink("Modifica", "Edit", new { id = Model.PkCliente }) |
+    @Html.ActionLink("Torna alla lista", "Index")
+</p>

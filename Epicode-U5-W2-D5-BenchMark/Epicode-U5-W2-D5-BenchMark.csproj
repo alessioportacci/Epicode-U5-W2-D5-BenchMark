@@ -152,6 +152,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Scripts\Filter.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -195,6 +196,8 @@
     <Content Include="Views\Prenotazione\Create.cshtml" />
     <Content Include="Views\Prenotazione\Edit.cshtml" />
     <Content Include="Views\Richieste\Index.cshtml" />
+    <Content Include="Views\Richieste\Create.cshtml" />
+    <Content Include="Views\Prenotazione\Checkout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

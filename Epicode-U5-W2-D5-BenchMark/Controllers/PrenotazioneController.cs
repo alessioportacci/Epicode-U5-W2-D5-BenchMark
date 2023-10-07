@@ -16,38 +16,7 @@ namespace Epicode_U5_W2_D5_BenchMark.Controllers
 
         public ActionResult Index()
         {
-            List<PrenotazioniModel> prenotazioniList = new List<PrenotazioniModel>();
-
-            try
-            {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand("SELECT * FROM V_Prenotazioni", conn);
-                SqlDataReader sqlDataReader = cmd.ExecuteReader();
-                while (sqlDataReader.Read())
-                    prenotazioniList.Add(new PrenotazioniModel()
-                    {
-                        PkPrenotazione = Int32.Parse(sqlDataReader["PkPrenotazione"].ToString()),
-                        NomeCliente = sqlDataReader["Nome"].ToString(),
-                        FkCliente = Int32.Parse(sqlDataReader["FkCliente"].ToString()),
-                        FkCamera = Int32.Parse(sqlDataReader["FkCamera"].ToString()),
-                        DataPrenotazione = DateTime.Parse(sqlDataReader["DataPrenotazione"].ToString()),
-                        Dal = DateTime.Parse(sqlDataReader["Dal"].ToString()),
-                        Al = DateTime.Parse(sqlDataReader["Al"].ToString()),
-                        Caparra = Double.Parse(sqlDataReader["Caparra"].ToString()),
-                        Tariffa = Double.Parse(sqlDataReader["Tariffa"].ToString()),
-                        MezzaPensione = Boolean.Parse(sqlDataReader["MezzaPensione"].ToString()),
-                        PrimaColazione = Boolean.Parse(sqlDataReader["PrimaColazione"].ToString()),
-                    }); ;
-            }
-            catch
-            { }
-            finally
-            {
-                conn.Close();
-            }
-
-
-            return View(prenotazioniList);
+            return View();
         }
 
         public ActionResult Details(int id)
@@ -64,9 +33,9 @@ namespace Epicode_U5_W2_D5_BenchMark.Controllers
                         NomeCliente = sqlDataReader["Nome"].ToString(),
                         FkCliente = Int32.Parse(sqlDataReader["FkCliente"].ToString()),
                         FkCamera = Int32.Parse(sqlDataReader["FkCamera"].ToString()),
-                        DataPrenotazione = DateTime.Parse(sqlDataReader["DataPrenotazione"].ToString()),
-                        Dal = DateTime.Parse(sqlDataReader["Dal"].ToString()),
-                        Al = DateTime.Parse(sqlDataReader["Al"].ToString()),
+                        DataPrenotazione = sqlDataReader["DataPrenotazione"].ToString(),
+                        Dal = sqlDataReader["Dal"].ToString(),
+                        Al =sqlDataReader["Al"].ToString(),
                         Caparra = Double.Parse(sqlDataReader["Caparra"].ToString()),
                         Tariffa = Double.Parse(sqlDataReader["Tariffa"].ToString()),
                         MezzaPensione = Boolean.Parse(sqlDataReader["MezzaPensione"].ToString()),
@@ -229,5 +198,76 @@ namespace Epicode_U5_W2_D5_BenchMark.Controllers
             }
             return RedirectToAction("Index");
         }
+
+
+        public ActionResult Checkout(int id) 
+        {
+            try
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("SELECT * FROM T_Prenotazioni WHERE PkPrenotazione = " + id, conn);
+                SqlDataReader sqlDataReader = cmd.ExecuteReader();
+                while (sqlDataReader.Read())
+                    return View(new CheckoutModel()
+                    {
+                        PkStanza = Int32.Parse(sqlDataReader["FkCamera"].ToString()),
+                        PkPrenotazione = Int32.Parse(sqlDataReader["PkPrenotazione"].ToString()),
+                        Preiodo = String.Concat(sqlDataReader["Dal"].ToString(), " - ", sqlDataReader["Al"].ToString()),
+                        Tariffa = Double.Parse(sqlDataReader["Tariffa"].ToString()),
+                        Caparra = Double.Parse(sqlDataReader["Caparra"].ToString()),
+                        Totale = Double.Parse(sqlDataReader["Tariffa"].ToString()) - Double.Parse(sqlDataReader["Caparra"].ToString()) + RichiesteController.GetTotale(id)
+                    });
+            }
+            catch
+            { }
+            finally
+            {
+                conn.Close();
+            }
+
+            return View();
+        }
+
+
+        public JsonResult PrenotazioniFilter(string CF = "", string Pensione = "")
+        {
+            List<PrenotazioniModel> prenotazioniList = new List<PrenotazioniModel>();
+
+            Pensione = Pensione.ToLower() == "false" || Pensione.ToLower() == "" ? "" : "1";
+
+            try
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(String.Concat("SELECT * FROM V_Prenotazioni ",
+                                                "WHERE CF LIKE CONCAT('%', '", CF, "', '%') ",
+                                                       "AND MezzaPensione LIKE CONCAT('%', '", Pensione, "', '%') "), conn);
+                SqlDataReader sqlDataReader = cmd.ExecuteReader();
+                while (sqlDataReader.Read())
+                    prenotazioniList.Add(new PrenotazioniModel()
+                    {
+                        PkPrenotazione = Int32.Parse(sqlDataReader["PkPrenotazione"].ToString()),
+                        NomeCliente = sqlDataReader["Nome"].ToString(),
+                        FkCliente = Int32.Parse(sqlDataReader["FkCliente"].ToString()),
+                        FkCamera = Int32.Parse(sqlDataReader["FkCamera"].ToString()),
+                        DataPrenotazione = sqlDataReader["DataPrenotazione"].ToString(),
+                        Dal = sqlDataReader["Dal"].ToString(),
+                        Al = sqlDataReader["Al"].ToString(),
+                        Caparra = Double.Parse(sqlDataReader["Caparra"].ToString()),
+                        Tariffa = Double.Parse(sqlDataReader["Tariffa"].ToString()),
+                        MezzaPensione = Boolean.Parse(sqlDataReader["MezzaPensione"].ToString()),
+                        PrimaColazione = Boolean.Parse(sqlDataReader["PrimaColazione"].ToString()),
+                    }); ;
+            }
+            catch
+            { }
+            finally
+            {
+                conn.Close();
+            }
+
+            return Json(prenotazioniList, JsonRequestBehavior.AllowGet);
+        }
+
+
     }
 }

@@ -1,0 +1,57 @@
+﻿@model Epicode_U5_W2_D5_BenchMark.Models.CheckoutModel
+
+@{
+    ViewBag.Title = "Checkout";
+}
+
+<h2>Checkout</h2>
+<hr />
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PkStanza)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PkStanza)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Preiodo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Preiodo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tariffa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tariffa)€
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Caparra)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Caparra)€
+        </dd>
+
+        @{
+            Html.RenderAction("Index", "Richieste", new { id = Model.PkPrenotazione });
+        }
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Totale)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Totale)€
+        </dd>
+
+    </dl>
+</div>

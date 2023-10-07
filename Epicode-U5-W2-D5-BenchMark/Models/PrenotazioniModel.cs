@@ -20,13 +20,13 @@ namespace Epicode_U5_W2_D5_BenchMark.Models
         public int FkCamera { get; set; }
 
         [Display(Name = "Data Prenotazione")]
-        public DateTime DataPrenotazione { get; set; }
+        public string DataPrenotazione { get; set; }
 
         [Display(Name = "Prenotazione dal")]
-        public DateTime Dal {  get; set; }
+        public string Dal {  get; set; }
 
         [Display(Name = "Prenotazione al")]
-        public DateTime Al {  get; set; }
+        public string Al {  get; set; }
         public double Caparra { get; set; }
         public double Tariffa { get; set; }
 
@@ -67,5 +67,23 @@ namespace Epicode_U5_W2_D5_BenchMark.Models
 
         [Display(Name = "Con prima colazione")]
         public bool PrimaColazione { get; set; }
+    }
+
+    public class CheckoutModel
+    {
+        [Display(Name = "Numero stanza")]
+        public int PkStanza { get; set; }
+
+        [Display(Name = "Numero stanza")]
+        public int PkPrenotazione { get; set; }
+
+        [Display(Name = "Periodo pernottamento")]
+        public string Preiodo { get; set; }
+
+        public double Tariffa { get; set; }
+
+        public double Caparra { get; set; }
+
+        public double Totale { get; set; }
     }
 }

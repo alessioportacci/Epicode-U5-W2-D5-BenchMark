@@ -4,54 +4,42 @@
     ViewBag.Title = "Index";
 }
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.PkRichiesta)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FkPrenotazione)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FkTipologia)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DataRichiesta)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Richiesta)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Prezzo)
-        </th>
-        <th></th>
-    </tr>
+@if (Model.Count() != 0)
+{
+    <h3> Richieste aggiuntive </h3>
+    <table class="table">
+        <tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.PkRichiesta)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FkPrenotazione)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FkTipologia)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DataRichiesta)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Richiesta)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Prezzo)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Richiesta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Prezzo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataRichiesta)
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Richiesta)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Prezzo) €
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataRichiesta)
+                </td>
+                @*
+                    <td>
+                        @Html.ActionLink("Rimuovi", "Delete", new { id=item.PkRichiesta })
+                    </td>
+                *@
+            </tr>
+        }
+    </table>
 }
 
-</table>

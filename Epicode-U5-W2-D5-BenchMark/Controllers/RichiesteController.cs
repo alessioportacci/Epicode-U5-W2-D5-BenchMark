@@ -19,20 +19,52 @@ namespace Epicode_U5_W2_D5_BenchMark.Controllers
         public ActionResult Index(int id)
         {
             List<RichiesteModel> richiesteList = new List<RichiesteModel>();
-
+            double totale = 0;
             try
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("SELECT * FROM V_Richieste WHERE FkPrenotazione = " + id, conn);
                 SqlDataReader sqlDataReader = cmd.ExecuteReader();
                 while (sqlDataReader.Read())
+                {
+                    totale += Convert.ToDouble(sqlDataReader["Prezzo"]);
                     richiesteList.Add(new RichiesteModel()
                     {
                         PkRichiesta = Int32.Parse(sqlDataReader["PkRichiesta"].ToString()),
                         FkPrenotazione = Int32.Parse(sqlDataReader["FkPrenotazione"].ToString()),
-                        DataRichiesta = DateTime.Parse(sqlDataReader["DataRichiesta"].ToString()),
+                        FkTipologia = Int32.Parse(sqlDataReader["FkTipologia"].ToString()),
                         Richiesta = sqlDataReader["Richiesta"].ToString(),
-                        Prezzo = Double.Parse(sqlDataReader["Richiesta"].ToString())
+                        Prezzo = Double.Parse(sqlDataReader["Prezzo"].ToString()),
+                        DataRichiesta = DateTime.Parse(sqlDataReader["DataRichiesta"].ToString()),
+                    });
+                }
+
+            }
+            catch
+            { }
+            finally
+            {
+                conn.Close();
+            }
+
+            ViewBag.stanzaId = id;
+
+            return PartialView(richiesteList);
+        }
+
+        public ActionResult Create(int id)
+        {
+            List<RichiesteTipologiaDropdownModel> richiesteList = new List<RichiesteTipologiaDropdownModel>();
+            try
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("SELECT * FROM T_RichiesteTipologia", conn);
+                SqlDataReader sqlDataReader = cmd.ExecuteReader();
+                while (sqlDataReader.Read())
+                    richiesteList.Add(new RichiesteTipologiaDropdownModel()
+                    {
+                        value = Int32.Parse(sqlDataReader["PkTipologia"].ToString()),
+                        text = String.Concat(sqlDataReader["Prezzo"].ToString(), "€ - ", sqlDataReader["Richiesta"].ToString())
                     });
             }
             catch
@@ -42,48 +74,53 @@ namespace Epicode_U5_W2_D5_BenchMark.Controllers
                 conn.Close();
             }
 
-            return PartialView(richiesteList);
-        }
+            ViewBag.id = id;
+            ViewBag.richieste = richiesteList;
 
-        public ActionResult Create()
-        {
             return View();
         }
 
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(RichiesteModel richiesta)
         {
             try
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("INSERT INTO T_RichiesteAggiuntive VALUES(@Prenotazione, @Tipologia, @Data)", conn);
+                cmd.Parameters.AddWithValue("Prenotazione", richiesta.FkPrenotazione);
+                cmd.Parameters.AddWithValue("Tipologia", richiesta.FkTipologia);
+                cmd.Parameters.AddWithValue("Data", DateTime.Now);
+                cmd.ExecuteNonQuery();
             }
             catch
+            { }
+            finally
             {
-                return View();
+                conn.Close();
             }
+        return RedirectToAction("Details", "Prenotazione", new { id = richiesta.FkPrenotazione });
         }
 
 
-        public ActionResult Edit(int id)
+        public static double GetTotale(int id) 
         {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
+            double totale = 0;
             try
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("SELECT * FROM V_Richieste WHERE FkPrenotazione = " + id, conn);
+                SqlDataReader sqlDataReader = cmd.ExecuteReader();
+                while (sqlDataReader.Read())
+                    totale += Convert.ToDouble(sqlDataReader["Prezzo"]);
             }
             catch
+            { }
+            finally
             {
-                return View();
+                conn.Close();
             }
+
+            return totale;
         }
     }
 }

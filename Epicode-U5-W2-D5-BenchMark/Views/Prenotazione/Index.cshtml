@@ -4,7 +4,20 @@
     ViewBag.Title = "Index";
 }
 
-<h1>Index</h1>
+<h1>Prenotazioni</h1>
+
+<div class="row row-cols-1 row-cols-md-3">
+    <div>
+        @Html.TextBox("CF")
+    </div>
+    <div>
+        <span>Pensione completa?</span>
+        @Html.CheckBox("Pensione")
+    </div>
+    <div>
+        <button id="Cerca"> Cerca </button>
+    </div>
+</div> 
 
 <table class="table">
     <tr>
@@ -37,42 +50,13 @@
         </th>
         <th></th>
     </tr>
+    <tbody id="tbody">
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.NomeCliente)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FkCamera)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DataPrenotazione)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Dal)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Al)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Caparra)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Tariffa)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MezzaPensione)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PrimaColazione)
-        </td>
-        <td>
-            @Html.ActionLink("Modifica", "Edit", new { id = item.PkPrenotazione }) |
-            @Html.ActionLink("Dettagli", "Details", new { id = item.PkPrenotazione }) |
-            @Html.ActionLink("Elimina", "Delete", new { id = item.PkPrenotazione })
-        </td>
-    </tr>
-}
+    </tbody>
 
 </table>
+
+@section scripts
+{
+    <script src="~/Scripts/Filter.js"></script>
+}
